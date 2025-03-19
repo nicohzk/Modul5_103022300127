@@ -1,21 +1,24 @@
-﻿using System.Runtime;
+﻿
+class SimpleDataBase<T> { 
+    private List<T> storedData;
+    private List<DateTime> inputDates;
 
-class PemrosesData {
+    public SimpleDataBase()
+    {
+        this.storedData = new List<T>();
+        this.inputDates = new List<DateTime>();
+    }
 
-    public T DapatkanNilaiTerbesar<T>(T inp,T inp2,T inp3) {
-        dynamic temp1 = (dynamic)inp;
-        dynamic temp2 = (dynamic)inp2;
-        dynamic temp3 = (dynamic)inp3;
+    public void AddNewData<T>(T data) {
+        dynamic? temp1 = data;
+        storedData.Add(temp1);
+        inputDates.Add(DateTime.Now);
+    }
 
-        dynamic? Largest = temp1;
-        if (Largest < temp2) {
-            Largest = temp2;
+    public void printAllData() {
+        for (int i = 0; i < storedData.Count; i++) {
+            Console.WriteLine("Data " + (i + 1) + " berisi: " + storedData[i] + ", yang disimpan pada waktu UTC: " + inputDates[i]);
         }
-        if(Largest < temp3) {
-            Largest = temp3;
-        }
-        return Largest;
-
     }
 }
 
@@ -23,8 +26,12 @@ class Program
 {
     static void Main(string[] args)
     {
-        PemrosesData data = new PemrosesData();
-        int x = data.DapatkanNilaiTerbesar<int>(10, 11, 12);
-        Console.WriteLine(x);
+
+        SimpleDataBase<int> database = new SimpleDataBase<int>();
+        database.AddNewData(13);
+        database.AddNewData(15);
+        database.AddNewData(30);
+
+        database.printAllData();
     }
 }
